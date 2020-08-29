@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import rough from 'roughjs/bundled/rough.esm';
 import Cell from './Cell'
 import '../Styling/Sandbox.css'
+import ToolContext from './Contexts/ToolContext'
 
 /* @author jentevandersanden
 * This functional component represents the sandbox in which the algorithm will be visualized.
@@ -14,7 +15,8 @@ const Sandbox = () => {
     const [content, setContent] = useState(null);
     const [width, setWidth] = useState(4);
     const [height, setHeight] = useState(4);
-    
+    const [equipedTool, setEquipedTool] = useState(null);
+    let tool_in_use = null;
 
     // Only call this on first render (We initialize the cells on first render)
     useEffect(()=>{
@@ -61,19 +63,34 @@ const Sandbox = () => {
         return result;
     }
 
+    /*
+    * onClick callback that's called when a cell is clicked.
+    */
+    const cellWasClicked = (index) =>{
+      if(tool_in_use === null){
+          console.log("Currently not using any tool.");
+          return;
+      } 
+    }
 
-    return ( <div className="sandbox" style={getSandboxStyle()}>
+
+    return ( <div className="sandbox" style={getSandboxStyle()}> 
+                <ToolContext.Consumer>
+                    {(context)=>(
+                        tool_in_use = context
+                    )}
+                </ToolContext.Consumer>
                 {content ? (
                     <div>
-                    {content.map((cell, index) =>(
-                        <Cell
-                            key={index}
-                            index={index}
-                            cell={cell}/>
-                    ))}
+                        {content.map((cell, index) =>(
+                            <Cell
+                                key={index}
+                                index={index}
+                                cell={cell}
+                                cellWasClicked={cellWasClicked}/>
+                        ))}
                     </div>
                 ) : "No content available."}
             </div>);
-}
- 
+} 
 export default Sandbox;

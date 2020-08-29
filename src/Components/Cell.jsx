@@ -6,7 +6,7 @@ import "../Styling/Cell.css"
 
 
 
-const Cell = ({index, cell}) => {
+const Cell = ({index, cell, cellWasClicked}) => {
     const [usedcanvas, setUsedCanvas] = useState(null);
 
     const generator = rough.generator();
@@ -17,7 +17,7 @@ const Cell = ({index, cell}) => {
     function drawCell (x,y,canvas){
         canvas.draw(generator.rectangle(x,y,cell.width - 1,cell.height - 1));
     }
-    
+
     // Only call this on first render (We draw the cell on first render)
     useEffect(()=>{
         var canvas = document.getElementById(index);
@@ -35,11 +35,12 @@ const Cell = ({index, cell}) => {
 
 
     return (
-        <canvas 
+        <canvas
             className="cellcanvas"
             id={index} 
             width={cell.width}
-            height={cell.height}>
+            height={cell.height}
+            onClick={cellWasClicked(index)}>
         </canvas>);
 }
  
