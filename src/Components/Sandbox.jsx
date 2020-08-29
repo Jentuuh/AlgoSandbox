@@ -3,10 +3,17 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import rough from 'roughjs/bundled/rough.esm';
 import Cell from './Cell'
+import '../Styling/Sandbox.css'
 
+/* @author jentevandersanden
+* This functional component represents the sandbox in which the algorithm will be visualized.
+* The Sandbox component uses the Cell component in this example. (Shortest path visualizer)
+*/
 const Sandbox = () => {
-    // Content within the sandbox
-    const [content, setContent] = useState();
+    // Component State
+    const [content, setContent] = useState(null);
+    const [width, setWidth] = useState(4);
+    const [height, setHeight] = useState(4);
     
 
     // Only call this on first render (We initialize the cells on first render)
@@ -42,8 +49,22 @@ const Sandbox = () => {
 
     }
 
+    // Function to dynamically render the width and height of the sandbox,
+    // depending on the width and height set in this component's state.
+    const getSandboxStyle = () =>{
+        // Parse the height and the width in the state into styling strings
+        let resultwidth = 50 * width;
+        resultwidth = String(resultwidth) + 'px';
+        let resultheight = 50 * height;
+        resultheight = String(resultheight) + 'px';
+        
+        let result = {  width: resultwidth,
+                        height: resultheight}
+        return result;
+    }
 
-    return ( <div className="sandbox">
+
+    return ( <div className="sandbox" style={getSandboxStyle()}>
                 {content ? (
                     <div>
                     {content.map((cell, index) =>(
