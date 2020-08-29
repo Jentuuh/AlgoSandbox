@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import Tool from './Tool';
 import '../Styling/Toolbox.css';
+import { toolContext } from './Contexts/ToolContext.ts';
 
 const ToolBox = () => {
     const [tools, setTools] = useState([
@@ -16,18 +17,22 @@ const ToolBox = () => {
                 toolIcon: 'https://image.flaticon.com/icons/svg/783/783470.svg'
             }
     ]);
-    const [equipedTool, setEquipedTool] = useState(null);
+    // const [equipedTool, setEquipedTool] = useState(null);
+    const equiped_tool = useContext(toolContext);
+
+
+
+
 
     // 'onClick' event callback for when a tool is clicked. This will equip the tool.
     const equipTool = (toolToEquip) => {
-        setEquipedTool(toolToEquip);
+        equiped_tool.setCurrentTool(toolToEquip);
     }
-
 
     return (
             <div className="toolbox">
                 <h2 className="h2">Tools:</h2>
-                <h3>Currently using: {equipedTool === null ? 'Nothing' : equipedTool.name}</h3>
+                <h3>Currently using: {equiped_tool.tool === null ? 'Nothing' : equiped_tool.tool.name}</h3>
                 {tools.map((tool, index) =>(
                         <Tool
                             key={index}

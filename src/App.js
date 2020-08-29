@@ -2,7 +2,8 @@ import React, { useLayoutEffect, useState, createContext } from 'react';
 import './App.css';
 import Sandbox from './Components/Sandbox';
 import ToolBox from './Components/ToolBox';
-import ToolContext from './Components/Contexts/ToolContext';
+import {toolContext} from './Components/Contexts/ToolContext.ts';
+import { useTool } from './Components/Contexts/ToolSetter.ts';
 
 /* @author: jentevandersanden
 * This is the main functional component in this application.
@@ -10,16 +11,16 @@ import ToolContext from './Components/Contexts/ToolContext';
 
 
 const App = () => {
-  const [equipedTool, setEquipedTool] = useState(null);
+  const tool = useTool();
 
   return (
   <div className="App">
-      <ToolContext.Provider value={equipedTool}>
+      <toolContext.Provider value={tool}>
         <div>
           <ToolBox/>
           <Sandbox/>
         </div>
-      </ToolContext.Provider>
+      </toolContext.Provider>
   </div>
   );
 
