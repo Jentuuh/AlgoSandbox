@@ -1,0 +1,8 @@
+.toolbox{
+    position: absolute;
+    left: 8%;
+    top: 40%;
+    display: flex;
+    flex-direction: column;
+
+}

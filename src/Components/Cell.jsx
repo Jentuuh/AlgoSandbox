@@ -7,6 +7,7 @@ import "../Styling/Cell.css"
 
 
 const Cell = ({index, cell}) => {
+    const [usedcanvas, setUsedCanvas] = useState(null);
 
     const generator = rough.generator();
 
@@ -14,11 +15,9 @@ const Cell = ({index, cell}) => {
     * @params => x: left coordinate of grid, y: top coordinate of grid
     */
     function drawCell (x,y,canvas){
-
         canvas.draw(generator.rectangle(x,y,cell.width - 1,cell.height - 1));
-
     }
-
+    
     // Only call this on first render (We draw the cell on first render)
     useEffect(()=>{
         var canvas = document.getElementById(index);
@@ -28,6 +27,7 @@ const Cell = ({index, cell}) => {
         ctx.clearRect(0,0, canvas.width, canvas.height);
     
         const rough_canvas = rough.canvas(canvas);
+        setUsedCanvas(canvas);
     
         // Drawing code
         drawCell(0,0, rough_canvas);

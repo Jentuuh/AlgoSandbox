@@ -44,9 +44,7 @@ const Sandbox = () => {
                              } ;
         }
         // Return the grid's data
-        console.log(cellsArray);
         setContent(cellsArray);
-
     }
 
     // Function to dynamically render the width and height of the sandbox,

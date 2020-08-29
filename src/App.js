@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import './App.css';
 import Sandbox from './Components/Sandbox';
+import ToolBox from './Components/ToolBox';
 
 /* @author: jentevandersanden
 * This is the main functional component in this application.
@@ -9,7 +10,12 @@ import Sandbox from './Components/Sandbox';
 
 const App = () => {
 
-  return (<Sandbox></Sandbox>);
+  return (
+  <div className="App">
+    <ToolBox/>
+    <Sandbox/>
+  </div>
+  );
 
 };
 
