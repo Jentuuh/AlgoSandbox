@@ -1,4 +1,5 @@
 .cellcanvas:hover{
     background-color: rgb(17, 0, 255);
     opacity: 0.6;
+    cursor: pointer;
 }
