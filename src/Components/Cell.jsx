@@ -2,11 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import rough from 'roughjs/bundled/rough.esm';
+import "../Styling/Cell.css"
 
 
 
 const Cell = ({index, cell}) => {
-    
+
     const generator = rough.generator();
 
     /* Draws a cell
@@ -34,7 +35,9 @@ const Cell = ({index, cell}) => {
 
 
     return (
-        <canvas id={index} 
+        <canvas 
+            className="cellcanvas"
+            id={index} 
             width={cell.width}
             height={cell.height}>
         </canvas>);
