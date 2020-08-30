@@ -1,11 +1,11 @@
-.toolIcon{
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    margin-bottom: 30px;
-    transition: transform .2s; /* Animation */
+.toolIcon {
+  width: 50px;
+  height: 50px;
+  cursor: move;
+  margin-bottom: 30px;
+  transition: transform 0.2s; /* Animation */
 }
 
-.toolIcon:hover{
-    transform: scale(1.3);
+.toolIcon:hover {
+  transform: scale(1.3);
 }

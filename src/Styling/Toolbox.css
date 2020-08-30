@@ -1,12 +1,12 @@
-.toolbox{
-    position: absolute;
-    width: 400px;
-    left: 8%;
-    top: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    background-color: seagreen;
-    border-radius: 20px;
+.toolbox {
+  position: absolute;
+  width: 200px;
+  left: 8%;
+  top: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: seagreen;
+  border-radius: 20px;
 }

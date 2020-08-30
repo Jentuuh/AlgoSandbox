@@ -1,8 +1,8 @@
-.sandbox{
-    position: absolute;
-    left: 41%; 
-    top: 41%;
-    background-color: rgb(120, 93, 216);
-    border-radius: 20px;
-    padding: 20px;
+.sandbox {
+  position: absolute;
+  left: 25%;
+  top: 20%;
+  /* background-color: rgb(120, 93, 216); */
+  border-radius: 20px;
+  padding: 100px;
 }
