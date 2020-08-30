@@ -6,6 +6,7 @@ import { toolContext } from "./Components/Contexts/ToolContext.ts";
 import { useTool } from "./Components/Contexts/ToolSetter.ts";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import ActionPanel from "./Components/ActionPanel";
 
 /* @author: jentevandersanden
  * This is the main functional component in this application.
@@ -26,7 +27,6 @@ const App = () => {
           <Sandbox />
         </div>
       </toolContext.Provider>
-      <DndProvider backend={HTML5Backend}>...</DndProvider>
     </div>
   );
 };

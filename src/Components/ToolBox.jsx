@@ -29,10 +29,12 @@ const ToolBox = () => {
   return (
     <div className="toolbox">
       <h2 className="h2">Tools:</h2>
-      <h3>
+      <h5>
         Currently using:{" "}
-        {equiped_tool.tool == null ? "Nothing" : equiped_tool.tool.name}
-      </h3>
+        {equiped_tool.tool.name === undefined
+          ? "Nothing"
+          : equiped_tool.tool.name}
+      </h5>
       {tools.map((tool, index) => (
         <Tool key={index} index={index} tool={tool} clickOnTool={equipTool} />
       ))}

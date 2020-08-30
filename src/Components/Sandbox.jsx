@@ -6,6 +6,7 @@ import Cell from "./Cell";
 import "../Styling/Sandbox.css";
 import { toolContext } from "./Contexts/ToolContext.ts";
 import { useContext } from "react";
+import ActionPanel from "./ActionPanel";
 
 /* @author jentevandersanden
  * This functional component represents the sandbox in which the algorithm will be visualized.
@@ -79,15 +80,15 @@ const Sandbox = () => {
 
       // Place new tool on index position
       cellsCopy[index].state = equipedTool.tool.name;
-      setContent(cellsCopy);
-      console.log(content);
 
-      // TODO: Implement tool usage
+      // Update state
+      setContent(cellsCopy);
     }
   };
 
   return (
     <div className="sandbox" style={getSandboxStyle()}>
+      <ActionPanel />
       {content ? (
         <div>
           {content.map((cell, index) => (
