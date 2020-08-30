@@ -86,6 +86,85 @@ const Sandbox = () => {
     }
   };
 
+  // Given the weights and the already processed nodes,
+  // find the node with the lowest weight
+  const findCheapestNode = (weights, processed) => {
+    const currentlyKnown = Object.keys(weights);
+
+    const cheapestNode = currentlyKnown.reduce((lowest, node) => {
+      if (lowest === null && !processed.includes(node)) {
+        lowest = node;
+      }
+      if (weights[node] < weights[lowest] && !processed.includes(node)) {
+        lowest = node;
+      }
+      return lowest;
+    }, null);
+    return cheapestNode;
+  };
+
+  // Dijkstra's algorithm, which finds the optimal path between 2 nodes
+  const dijkstra = (graph) => {
+    // We want to find the lowest cost to each node
+    const weights = Object.assign({ finish: Infinity }, graph.start);
+
+    // Consider each node as a possible parent
+    const parents = { finish: null };
+    for (let child in graph.start) {
+      parents[child] = "start";
+    }
+
+    // The nodes that have already been processed (none so far)
+    const processed = [];
+
+    let node = findCheapestNode(weights, processed);
+
+    // We'll use that node as the key to the while loop,
+    // this loop will continuously look for the cheapest node.
+    while (node) {
+      // Get weight of current node
+      let weight = weights[node];
+
+      // Get all neighbours of the current node (at most 8)
+      let children = graph[node];
+
+      /* Loop through each child, calculate the weight
+       * to reach that child. We'll only update the weight of that
+       * node in the 'weights'-object if it's the lowest or only available
+       * weight.
+       */
+
+      for (let n in children) {
+        let possibleNewWeight = weight + children[n];
+        if (!weights[n] || weights[n] > possibleNewWeight) {
+          weights[n] = possibleNewWeight;
+          parents[n] = node;
+        }
+      }
+
+      // Push processed data
+      processed.push(node);
+      // Repeat until we processed each node
+      node = findCheapestNode(weights, processed);
+    }
+
+    let optimalPath = ["finish"];
+
+    let parent = parents.finish;
+
+    while (parent) {
+      optimalPath.unshift(parent);
+      parent = parents[parent]; // Add parent to start of path
+      // (Note that we're actually running through the path from back to front)
+    }
+    const results = {
+      distance: weights.finish,
+      path: optimalPath,
+    };
+
+    return results;
+  };
+
   return (
     <div className="sandbox" style={getSandboxStyle()}>
       <ActionPanel />
