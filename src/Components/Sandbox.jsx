@@ -7,6 +7,7 @@ import "../Styling/Sandbox.css";
 import { toolContext } from "./Contexts/ToolContext.ts";
 import { useContext } from "react";
 import ActionPanel from "./ActionPanel";
+import { corners, borders } from "../Enums/Directions";
 
 /* @author jentevandersanden
  * This functional component represents the sandbox in which the algorithm will be visualized.
@@ -84,26 +85,36 @@ const Sandbox = () => {
       // Update state
       setContent(cellsCopy);
       console.log(cellsCopy);
+      parseMatrixIntoJsonGraph();
     }
   };
 
+  /**
+   * Parses content matrix into a json object of nodes
+   * TODO: fix error
+   */
   const parseMatrixIntoJsonGraph = () => {
     // Result
-    const graph = {};
+    let graph = {};
     try {
-      let startIndex = findStart(content);
-      if (cornerCheck(startIndex)) {
-        return;
+      // Initialize all nodes
+      for (let i = 0; i < content.length; i++) {
+        if (cornerCheck(i, graph) != corners.NC) {
+          graph = borderCheck(i, graph);
+        } else {
+          graph = cornerCheck(i, graph);
+        }
       }
-      // Create start point in graph
-      graph.start = { l: 1, r: 1, u: 1, d: 1 };
-
       console.log(graph);
     } catch (e) {
       console.error(e);
     }
   };
 
+  /**
+   * Finds the starting node in the array of cells.
+   * @param {Array{Cells}} content
+   */
   const findStart = (content) => {
     for (let i = 0; i < content.length; i++) {
       if (content[i].state === "Start") return i;
@@ -111,24 +122,92 @@ const Sandbox = () => {
     throw "No start was found!";
   };
 
-  const cornerCheck = (index) => {
+  /**
+   * Checks whether a certain index lies on a corner of the grid.
+   * @param {int} index
+   */
+  const cornerCheck = (index, graph) => {
     switch (index) {
       case 0:
         // Left top corner
-        break;
+        graph[index] = {};
+        graph[index][index + 1] = 1;
+        graph[index][index + width] = 1;
+        return graph;
+
       case width - 1:
         // Right top corner
-        break;
+        graph[index] = {};
+        graph[index][index - 1] = 1;
+        graph[index][index + width] = 1;
+        return graph;
+
       case content.length - 1:
         // Right bottom corner
-        break;
+        graph[index] = {};
+        graph[index][index - 1] = 1;
+        graph[index][index - width] = 1;
+        return graph;
+
       case content.length - width:
         // Left bottom corner
-        break;
+        graph[index] = {};
+        graph[index][index + 1] = 1;
+        graph[index][index - width] = 1;
+        return graph;
 
       default:
         // NO CORNER HIT !
-        break;
+        return corners.NC;
+    }
+  };
+
+  /**
+   * Checks whether a given index lies on a border of the grid.
+   * @param {int} index
+   */
+  const borderCheck = (index, graph) => {
+    switch (index) {
+      case index % width == 0:
+        // Left border
+        graph[index] = {};
+        graph[index][index + 1] = 1;
+        graph[index][index - width] = 1;
+        graph[index][index + width] = 1;
+        return graph;
+
+      case index % width == -1:
+        // Right border
+        graph[index] = {};
+        graph[index][index - 1] = 1;
+        graph[index][index - width] = 1;
+        graph[index][index + width] = 1;
+        return graph;
+
+      case index < width:
+        // Upper border
+        graph[index] = {};
+        graph[index][index + 1] = 1;
+        graph[index][index - 1] = 1;
+        graph[index][index + width] = 1;
+        return graph;
+
+      case index >= content.length - width:
+        // Bottom border
+        graph[index] = {};
+        graph[index][index + 1] = 1;
+        graph[index][index - 1] = 1;
+        graph[index][index - width] = 1;
+        return graph;
+
+      default:
+        // NO BORDER HIT!
+        graph[index] = {};
+        graph[index][index + 1] = 1;
+        graph[index][index - 1] = 1;
+        graph[index][index - width] = 1;
+        graph[index][index + width] = 1;
+        return graph;
     }
   };
 
