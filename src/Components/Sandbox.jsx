@@ -15,8 +15,8 @@ import ActionPanel from "./ActionPanel";
 const Sandbox = () => {
   // Component State
   const [content, setContent] = useState(null);
-  const [width, setWidth] = useState(16);
-  const [height, setHeight] = useState(16);
+  const [width, setWidth] = useState(5);
+  const [height, setHeight] = useState(5);
 
   const equipedTool = useContext(toolContext);
 
@@ -83,6 +83,52 @@ const Sandbox = () => {
 
       // Update state
       setContent(cellsCopy);
+      console.log(cellsCopy);
+    }
+  };
+
+  const parseMatrixIntoJsonGraph = () => {
+    // Result
+    const graph = {};
+    try {
+      let startIndex = findStart(content);
+      if (cornerCheck(startIndex)) {
+        return;
+      }
+      // Create start point in graph
+      graph.start = { l: 1, r: 1, u: 1, d: 1 };
+
+      console.log(graph);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const findStart = (content) => {
+    for (let i = 0; i < content.length; i++) {
+      if (content[i].state === "Start") return i;
+    }
+    throw "No start was found!";
+  };
+
+  const cornerCheck = (index) => {
+    switch (index) {
+      case 0:
+        // Left top corner
+        break;
+      case width - 1:
+        // Right top corner
+        break;
+      case content.length - 1:
+        // Right bottom corner
+        break;
+      case content.length - width:
+        // Left bottom corner
+        break;
+
+      default:
+        // NO CORNER HIT !
+        break;
     }
   };
 
